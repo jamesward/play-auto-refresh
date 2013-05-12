@@ -5,7 +5,7 @@ import Keys._
 import unfiltered.netty.websockets._
 import unfiltered.netty.websockets.Open
 
-object BrowserNotifier extends Plugin {
+object BrowserNotifierPlugin extends Plugin {
 
   val sockets = collection.mutable.ListBuffer.empty[WebSocket]
   WebSocketServer("/", 9001) {
@@ -20,7 +20,7 @@ object BrowserNotifier extends Plugin {
   }
 
   override lazy val projectSettings = super.projectSettings ++ Seq(
-    BrowserNotifier.browserNotification <<= BrowserNotifier.browserNotificationTask.triggeredBy(compile in Compile)
+    BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.browserNotificationTask.triggeredBy(compile in Compile)
   )
   
 }
