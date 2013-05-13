@@ -7,16 +7,16 @@ import unfiltered.netty.websockets.Open
 
 object BrowserNotifierPlugin extends Plugin {
 
-  val sockets = collection.mutable.ListBuffer.empty[WebSocket]
+  val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
   WebSocketServer("/", 9001) {
-    case Open(s) => sockets += s
-    case Close(s) => sockets -= s
+    case Open(s) => openSockets += s
+    case Close(s) => openSockets -= s
     case Error(s, e) => println(e.getMessage)
   }.start()
 
   val browserNotification = TaskKey[Unit]("browser-notification")
-  val browserNotificationTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) => 
-    sockets foreach (_.send("reload"))
+  val browserNotificationTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
+    openSockets foreach (_.send("reload"))
   }
 
   override lazy val projectSettings = super.projectSettings ++ Seq(

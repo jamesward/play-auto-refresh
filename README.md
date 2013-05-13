@@ -19,3 +19,17 @@ Setup
 4. Open your application in your browser: [http://localhost:9000](http://localhost:9000)
 
 5. Make a change to the code for your application and watch your changes magically appear in your browser!
+
+
+
+Build
+-----
+
+
+Release
+-------
+
+1. Set the release version in `build.sbt`
+2. Commit
+3. Tag git `v0.1.2`
+4. Release: `sbt publish-signed`
