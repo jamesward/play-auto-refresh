@@ -15,12 +15,22 @@ object BrowserNotifierPlugin extends Plugin {
   }.start()
 
   val browserNotification = TaskKey[Unit]("browser-notification")
-  val browserNotificationTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
+  
+  val compileTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
     openSockets foreach (_.send("reload"))
   }
+  
+  val playAssetsDirectories = SettingKey[Seq[File]]("play-assets-directories")
 
   override lazy val projectSettings = super.projectSettings ++ Seq(
-    BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.browserNotificationTask.triggeredBy(compile in Compile)
+    watchSources <++= playAssetsDirectories map { dirs =>
+      for {
+        dir <- dirs
+        file <- (dir.*** --- dir).get
+      } yield file
+    },
+    watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get },
+    BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.compileTask.triggeredBy(compile in Compile)
   )
   
 }

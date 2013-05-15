@@ -21,15 +21,36 @@ Setup
 5. Make a change to the code for your application and watch your changes magically appear in your browser!
 
 
+Release Info
+------------
 
-Build
------
+0.0.1 - Push changes on compile with default watches
+0.0.2 - Add `/public` and `/app/assets` to default watches
 
 
-Release
--------
+Developer Info
+--------------
+
+### Setup a Test App
+
+In a Play app add a `project/project/Build.scala` file containing:
+
+```
+import sbt._
+
+object PluginDef extends Build {
+  override lazy val projects = Seq(root)
+  lazy val root = Project("plugins", file(".")).dependsOn(playAutoRefreshPlugin)
+  lazy val playAutoRefreshPlugin = file("../../play-auto-refresh")
+}
+```
+
+Run the Play app with `~run` and then test that reloading works.  To recompile the `play-auto-refresh` plugin, restart the Play app.
+
+### Release
 
 1. Set the release version in `build.sbt`
-2. Commit
-3. Tag git `v0.1.2`
-4. Release: `sbt publish-signed`
+2. Git Commit
+3. Git Tag
+4. Release to the OSS repo: `sbt publish-signed`
+
