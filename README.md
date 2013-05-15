@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.2")
+        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.3")
 
 2. Add the [Play Framework Tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) Chrome Extension
 
@@ -24,8 +24,9 @@ Setup
 Release Info
 ------------
 
-0.0.1 - Push changes on compile with default watches
-0.0.2 - Add `/public` and `/app/assets` to default watches
+* 0.0.1 - Push changes on compile with default watches
+* 0.0.2 - Add `/public` and `/app/assets` to default watches
+* 0.0.3 - Fix botched release
 
 
 Developer Info
