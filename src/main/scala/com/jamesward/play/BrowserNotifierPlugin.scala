@@ -8,11 +8,17 @@ import unfiltered.netty.websockets.Open
 object BrowserNotifierPlugin extends Plugin {
 
   val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
-  WebSocketServer("/", 9001) {
-    case Open(s) => openSockets += s
-    case Close(s) => openSockets -= s
-    case Error(s, e) => println(e.getMessage)
-  }.start()
+
+  try {
+    WebSocketServer("/", 9001) {
+      case Open(s) => openSockets += s
+      case Close(s) => openSockets -= s
+      case Error(s, e) => println(e.getMessage)
+    }.start()
+  }
+  catch {
+    case _ => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
+  }
 
   val browserNotification = TaskKey[Unit]("browser-notification")
   
