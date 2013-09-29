@@ -2,23 +2,17 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.2"
 
-version := "0.0.4"
+version := "0.0.5"
 
 sbtPlugin := true
 
 libraryDependencies ++= Seq("net.databinder" %% "unfiltered-netty-websockets" % "0.6.8")
 
-publishTo <<= version { v: String =>
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
 
-publishMavenStyle := true
+publishMavenStyle := false
 
 publishArtifact in Test := false
 
@@ -52,5 +46,3 @@ pomExtra := (
     <version>7</version>
   </parent>
 )
-
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")

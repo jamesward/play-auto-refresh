@@ -17,7 +17,7 @@ object BrowserNotifierPlugin extends Plugin {
     }.start()
   }
   catch {
-    case _ => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
+    case _: Throwable => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
   }
 
   val browserNotification = TaskKey[Unit]("browser-notification")
