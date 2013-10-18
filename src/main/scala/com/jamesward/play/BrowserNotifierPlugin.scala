@@ -28,7 +28,7 @@ object BrowserNotifierPlugin extends Plugin {
   
   val playAssetsDirectories = SettingKey[Seq[File]]("play-assets-directories")
 
-  override lazy val projectSettings = super.projectSettings ++ Seq(
+  lazy val livereload = Seq(
     watchSources <++= playAssetsDirectories map { dirs =>
       for {
         dir <- dirs
@@ -38,5 +38,4 @@ object BrowserNotifierPlugin extends Plugin {
     watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get },
     BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.compileTask.triggeredBy(compile in Compile)
   )
-  
 }
