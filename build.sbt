@@ -2,9 +2,9 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.3"
 
-version := "0.0.5"
+version := "0.0.6"
 
 sbtPlugin := true
 
@@ -46,3 +46,5 @@ pomExtra := (
     <version>7</version>
   </parent>
 )
+
+ScriptedPlugin.scriptedSettings
