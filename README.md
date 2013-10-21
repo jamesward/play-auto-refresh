@@ -12,6 +12,16 @@ Setup
 
     Note: For Play before 2.2.0 use version `0.0.4`.
 
+2. Update your project build settings.  For `project/Build.scala` pull in the setings with:
+
+        val main = play.Project(appName, appVersion, appDependencies).settings(
+          com.jamesward.play.BrowserNotifierPlugin.livereload: _*
+        )
+
+    For `build.sbt` add an empty line and the following at the end of the file:
+
+        com.jamesward.play.BrowserNotifierPlugin.livereload
+
 2. Add the [Play Framework Tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) Chrome Extension
 
 3. Start your Play app in file watch mode:
