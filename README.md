@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.6")
+        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.7")
 
     Note: For Play before 2.2.0 use version `0.0.4`.
 
@@ -42,6 +42,7 @@ Release Info
 * 0.0.4 - Fix failure due to multiple instances trying to use the same port
 * 0.0.5 - Bumps for Play 2.2.0 / sbt 0.13.0 and publish the sbt community repo
 * 0.0.6 - Avoid overriding settings: https://github.com/jamesward/play-auto-refresh/pull/8
+* 0.0.7 - Fix incompatibility with Play 2.2.x
 
 
 Developer Info

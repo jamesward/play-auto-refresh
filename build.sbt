@@ -4,11 +4,11 @@ organization := "com.jamesward"
 
 scalaVersion := "2.10.2"
 
-version := "0.0.6"
+version := "0.0.7"
 
 sbtPlugin := true
 
-libraryDependencies ++= Seq("net.databinder" %% "unfiltered-netty-websockets" % "0.6.8")
+libraryDependencies ++= Seq("net.databinder" %% "unfiltered-netty-websockets" % "0.7.0")
 
 publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
 

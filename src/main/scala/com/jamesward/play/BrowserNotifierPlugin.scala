@@ -2,6 +2,8 @@ package com.jamesward.play
 
 import sbt._
 import Keys._
+import unfiltered.request.{GET, Path}
+import unfiltered.netty._
 import unfiltered.netty.websockets._
 import unfiltered.netty.websockets.Open
 
@@ -10,11 +12,14 @@ object BrowserNotifierPlugin extends Plugin {
   val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
 
   try {
-    WebSocketServer("/", 9001) {
-      case Open(s) => openSockets += s
-      case Close(s) => openSockets -= s
-      case Error(s, e) => println(e.getMessage)
-    }.start()
+    Http(9001).handler(Planify({
+      case GET(Path("/")) => {
+        case Open(s) => openSockets += s
+        case Close(s) => openSockets -= s
+        case Error(s, e) => println(e.getMessage)
+      }
+    })).start()
+    println("auto-refresh websocket started on port 9001")
   }
   catch {
     case _: Throwable => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
