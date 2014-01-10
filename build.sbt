@@ -22,7 +22,7 @@ pomExtra := (
   <url>http://github.com/jamesward/play-auto-refresh</url>
   <licenses>
     <license>
-      <name>MIT License"</name>
+      <name>MIT License</name>
       <url>http://opensource.org/licenses/MIT</url>
       <distribution>repo</distribution>
     </license>
@@ -30,7 +30,7 @@ pomExtra := (
   <scm>
     <url>git@github.com:jamesward/play-auto-refresh.git</url>
     <connection>scm:git:git@github.com:jamesward/play-auto-refresh.git</connection>
-    <developerConnection>scm:git:https://github.com/webjars/webjars-play.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:jamesward/play-auto-refresh.git</developerConnection>
   </scm>
   <developers>
     <developer>
