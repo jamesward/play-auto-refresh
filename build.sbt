@@ -1,3 +1,5 @@
+import bintray.Keys._
+
 name := "play-auto-refresh"
 
 organization := "com.jamesward"
@@ -10,39 +12,12 @@ sbtPlugin := true
 
 libraryDependencies ++= Seq("net.databinder" %% "unfiltered-netty-websockets" % "0.7.0")
 
-publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
-
 publishMavenStyle := false
 
-publishArtifact in Test := false
+bintrayPublishSettings
 
-pomIncludeRepository := { _ => false }
+repository in bintray := "sbt-plugins"
 
-pomExtra := (
-  <url>http://github.com/jamesward/play-auto-refresh</url>
-  <licenses>
-    <license>
-      <name>MIT License</name>
-      <url>http://opensource.org/licenses/MIT</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>git@github.com:jamesward/play-auto-refresh.git</url>
-    <connection>scm:git:git@github.com:jamesward/play-auto-refresh.git</connection>
-    <developerConnection>scm:git:git@github.com:jamesward/play-auto-refresh.git</developerConnection>
-  </scm>
-  <developers>
-    <developer>
-      <id>jamesward</id>
-      <name>James Ward</name>
-      <url>http://www.jamesward.com</url>
-      <email>james@jamesward.com</email>
-    </developer>
-  </developers>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-)
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+
+bintrayOrganization in bintray := None
