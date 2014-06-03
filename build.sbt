@@ -4,7 +4,7 @@ organization := "com.jamesward"
 
 scalaVersion := "2.10.2"
 
-version := "0.0.7"
+version := "0.0.8"
 
 sbtPlugin := true
 
