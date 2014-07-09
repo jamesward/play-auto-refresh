@@ -61,4 +61,5 @@ Run the Play app with `~run` and then test that reloading works.  To recompile t
 2. Update the version in `README.md`
 3. Git Commit
 4. Git Tag
-5. Release to the OSS repo: `sbt publish-signed`
+5. Push tags
+6. Publish: `sbt publish-signed`
