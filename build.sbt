@@ -21,3 +21,5 @@ repository in bintray := "sbt-plugins"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 bintrayOrganization in bintray := None
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.0.2")

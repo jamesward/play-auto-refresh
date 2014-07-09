@@ -1,13 +1,13 @@
 package com.jamesward.play
 
+import com.typesafe.sbt.web.SbtWeb
+import sbt.Keys._
 import sbt._
-import Keys._
-import unfiltered.request.{GET, Path}
 import unfiltered.netty._
 import unfiltered.netty.websockets._
-import unfiltered.netty.websockets.Open
+import unfiltered.request.{GET, Path}
 
-object BrowserNotifierPlugin extends Plugin {
+object BrowserNotifierPlugin extends AutoPlugin {
 
   val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
 
@@ -25,20 +25,25 @@ object BrowserNotifierPlugin extends Plugin {
     case _: Throwable => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
   }
 
+  override def requires: Plugins = SbtWeb
+
+  override def trigger: PluginTrigger = AllRequirements
+
   val browserNotification = TaskKey[Unit]("browser-notification")
 
   val compileTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
     openSockets foreach (_.send("reload"))
   }
 
-  lazy val livereload = Seq(
+  override def projectSettings: Seq[Def.Setting[_]] = Seq(
+    // conf directory
     watchSources <++= unmanagedResourceDirectories in Compile map { dirs =>
       for {
         dir <- dirs
         file <- (dir.*** --- dir).get
       } yield file
     },
-    watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get },
+    watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get},
     BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.compileTask.triggeredBy(compile in Compile)
   )
 }
