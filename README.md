@@ -1,34 +1,26 @@
 Play Auto Refresh
 =================
 
-This is an SBT plugin for Play Framework apps which works with a Chrome Extension to auto-refresh your browser when you make changes to your app.
+This is an SBT plugin for Play Framework (or sbt-web) apps which works with a Chrome Extension to auto-refresh your browser when you make changes to your app.
 
 Setup
 -----
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.8")
+        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.9")
+        
+2. The plugin enables itself automatically as soon as you enable Play or sbt-web in your project.
 
-2. Update your project build settings.  For `project/Build.scala` pull in the setings with:
+3. Add the [Play Framework Tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) Chrome Extension
 
-        val main = play.Project(appName, appVersion, appDependencies).settings(
-          com.jamesward.play.BrowserNotifierPlugin.livereload: _*
-        )
-
-    For `build.sbt` add an empty line and the following at the end of the file:
-
-        com.jamesward.play.BrowserNotifierPlugin.livereload
-
-2. Add the [Play Framework Tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) Chrome Extension
-
-3. Start your Play app in file watch mode:
+4. Start your Play app in file watch mode:
 
         play ~run
 
-4. Open your application in your browser: [http://localhost:9000](http://localhost:9000)
+5. Open your application in your browser: [http://localhost:9000](http://localhost:9000)
 
-5. Make a change to the code for your application and watch your changes magically appear in your browser!
+6. Make a change to the code for your application and watch your changes magically appear in your browser!
 
 
 Release Info
@@ -42,7 +34,7 @@ Release Info
 * 0.0.6 - Avoid overriding settings: https://github.com/jamesward/play-auto-refresh/pull/8
 * 0.0.7 - Fix incompatibility with Play 2.2.x
 * 0.0.8 - Fix incompatibility with Play 2.3.x
-
+* 0.0.9 - Migrate to an sbt 0.13.5 auto-plugin
 
 Developer Info
 --------------
@@ -70,4 +62,3 @@ Run the Play app with `~run` and then test that reloading works.  To recompile t
 3. Git Commit
 4. Git Tag
 5. Release to the OSS repo: `sbt publish-signed`
-
