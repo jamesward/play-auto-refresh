@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.9")
+        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.10")
         
 2. The plugin enables itself automatically as soon as you enable Play or sbt-web in your project.
 
@@ -35,6 +35,7 @@ Release Info
 * 0.0.7 - Fix incompatibility with Play 2.2.x
 * 0.0.8 - Fix incompatibility with Play 2.3.x
 * 0.0.9 - Migrate to an sbt 0.13.5 auto-plugin
+* 0.0.10 - Use the configured Play port to tell the Chrome plugin which URL to reload
 
 Developer Info
 --------------
