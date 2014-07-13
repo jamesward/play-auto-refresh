@@ -22,7 +22,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
     println("auto-refresh websocket started on port 9001")
   }
   catch {
-    case _: Throwable => println("Could not start the auto-reload server.  This is probably because it is already running, in which case everything should still work.")
+    case _: Throwable => println("Could not start the auto-reload server. This is probably because it is already running, in which case everything should still work.")
   }
 
   override def requires: Plugins = SbtWeb
@@ -31,8 +31,10 @@ object BrowserNotifierPlugin extends AutoPlugin {
 
   val browserNotification = TaskKey[Unit]("browser-notification")
 
+  val port = sys.props.get("http.port").getOrElse("9000")
+
   val compileTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
-    openSockets foreach (_.send("reload"))
+    openSockets foreach (_.send(s"reload:$port"))
   }
 
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
@@ -44,6 +46,6 @@ object BrowserNotifierPlugin extends AutoPlugin {
       } yield file
     },
     watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get},
-    BrowserNotifierPlugin.browserNotification <<= BrowserNotifierPlugin.compileTask.triggeredBy(compile in Compile)
+    browserNotification <<= compileTask.triggeredBy(compile in Compile)
   )
 }
