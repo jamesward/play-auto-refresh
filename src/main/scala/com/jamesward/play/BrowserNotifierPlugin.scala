@@ -1,11 +1,19 @@
 package com.jamesward.play
 
-import com.typesafe.sbt.web.SbtWeb
+import java.awt.Desktop
+
+import _root_.play.PlayImport.PlayKeys
+import play.{Play, PlayRunHook}
 import sbt.Keys._
 import sbt._
 import unfiltered.netty._
 import unfiltered.netty.websockets._
 import unfiltered.request.{GET, Path}
+
+object BrowserNotifierKeys {
+  val shouldOpenBrowser = SettingKey[Boolean]("should-open-browser", "Controls if the plugin should open the web " +
+    "browser automatically when running the app")
+}
 
 object BrowserNotifierPlugin extends AutoPlugin {
 
@@ -25,7 +33,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
     case _: Throwable => println("Could not start the auto-reload server. This is probably because it is already running, in which case everything should still work.")
   }
 
-  override def requires: Plugins = SbtWeb
+  override def requires: Plugins = Play
 
   override def trigger: PluginTrigger = AllRequirements
 
@@ -37,6 +45,15 @@ object BrowserNotifierPlugin extends AutoPlugin {
     openSockets foreach (_.send(s"reload:$port"))
   }
 
+  val autoOpen = Def.setting {
+    PlayRunHook.makeRunHookFromOnStarted { _ =>
+      if (BrowserNotifierKeys.shouldOpenBrowser.value) {
+        Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
+      }
+      ()
+    }
+  }
+
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
     // conf directory
     watchSources <++= unmanagedResourceDirectories in Compile map { dirs =>
@@ -46,6 +63,8 @@ object BrowserNotifierPlugin extends AutoPlugin {
       } yield file
     },
     watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get},
-    browserNotification <<= compileTask.triggeredBy(compile in Compile)
+    browserNotification <<= compileTask.triggeredBy(compile in Compile),
+    BrowserNotifierKeys.shouldOpenBrowser := true,
+    PlayKeys.playRunHooks += autoOpen.value
   )
 }
