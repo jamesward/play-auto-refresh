@@ -4,13 +4,15 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.3"
 
-version := "0.0.8"
+javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
+
+version := "0.0.10"
 
 sbtPlugin := true
 
-libraryDependencies ++= Seq("net.databinder" %% "unfiltered-netty-websockets" % "0.7.0")
+libraryDependencies += "net.databinder" %% "unfiltered-netty-websockets" % "0.8.0"
 
 publishMavenStyle := false
 
