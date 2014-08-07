@@ -62,6 +62,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
         file <- (dir.*** --- dir).get
       } yield file
     },
+    // assets directory, might not be necessary with SbtWeb
     watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get},
     browserNotification <<= compileTask.triggeredBy(compile in Compile),
     BrowserNotifierKeys.shouldOpenBrowser := true,
