@@ -8,17 +8,21 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.10")
+        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.11")
         
-2. The plugin enables itself automatically as soon as you enable Play or sbt-web in your project.
+2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
 
 3. Add the [Play Framework Tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) Chrome Extension
 
 4. Start your Play app in file watch mode:
 
-        play ~run
+        sbt ~run
+        
+or
 
-5. Open your application in your browser: [http://localhost:9000](http://localhost:9000)
+        activator ~run
+
+5. The browser window should open automatically (if you don't want this, set `BrowserNotifierKeys.shouldOpenBrowser := false`)
 
 6. Make a change to the code for your application and watch your changes magically appear in your browser!
 
@@ -36,6 +40,7 @@ Release Info
 * 0.0.8 - Fix incompatibility with Play 2.3.x
 * 0.0.9 - Migrate to an sbt 0.13.5 auto-plugin
 * 0.0.10 - Use the configured Play port to tell the Chrome plugin which URL to reload
+* 0.0.11 - Automatically open the browser window when you run your app
 
 Developer Info
 --------------
@@ -54,7 +59,7 @@ object PluginDef extends Build {
 }
 ```
 
-Run the Play app with `~run` and then test that reloading works.  To recompile the `play-auto-refresh` plugin, restart the Play app.
+Run the Play app with `~run` and then test that reloading works. To recompile the `play-auto-refresh` plugin, restart the Play app.
 
 ### Release
 
