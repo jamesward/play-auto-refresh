@@ -18,7 +18,7 @@ Setup
 
         sbt ~run
         
-or
+   or
 
         activator ~run
 
