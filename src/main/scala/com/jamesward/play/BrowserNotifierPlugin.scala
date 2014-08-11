@@ -16,7 +16,6 @@ object BrowserNotifierKeys {
 }
 
 object BrowserNotifierPlugin extends AutoPlugin {
-
   val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
 
   try {
@@ -48,7 +47,10 @@ object BrowserNotifierPlugin extends AutoPlugin {
   val autoOpen = Def.setting {
     PlayRunHook.makeRunHookFromOnStarted { _ =>
       if (BrowserNotifierKeys.shouldOpenBrowser.value) {
-        Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
+        sys.props("os.name").toLowerCase match {
+          case x if x contains "mac" => s"open http://localhost:$port".!
+          case _ => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
+        }
       }
       ()
     }
