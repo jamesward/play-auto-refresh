@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.11")
+        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.11")
         
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
 
