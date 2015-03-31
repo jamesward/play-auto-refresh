@@ -24,6 +24,11 @@ Setup
 
 5. The browser window should open automatically (if you don't want this, set `BrowserNotifierKeys.shouldOpenBrowser := false`)
 
+        For play 2.3.x, edit `build.sbt`:
+        
+        - Add `import com.jamesward.play.BrowserNotifierKeys` at header
+        - Add `BrowserNotifierKeys.shouldOpenBrowser := false` at footer
+
 6. Make a change to the code for your application and watch your changes magically appear in your browser!
 
 
