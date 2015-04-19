@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.11")
+        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.12")
         
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
 
@@ -46,6 +46,7 @@ Release Info
 * 0.0.9 - Migrate to an sbt 0.13.5 auto-plugin
 * 0.0.10 - Use the configured Play port to tell the Chrome plugin which URL to reload
 * 0.0.11 - Automatically open the browser window when you run your app
+* 0.0.12 - Prevent plugin from failing when running in a headless environment
 
 Developer Info
 --------------
