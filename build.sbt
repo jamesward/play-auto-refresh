@@ -8,7 +8,7 @@ scalaVersion := "2.10.3"
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
-version := "0.0.11"
+version := "0.0.12"
 
 sbtPlugin := true
 

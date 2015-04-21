@@ -44,15 +44,18 @@ object BrowserNotifierPlugin extends AutoPlugin {
     openSockets foreach (_.send(s"reload:$port"))
   }
 
+  private[this] def openBrowser: Unit = {
+    sys.props("os.name").toLowerCase match {
+      case x if x contains "mac" => s"open http://localhost:$port".!
+      case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
+      case _ => println("Attempted to open web browser, but the current desktop environment is not supported.")
+    }
+  }
+
   val autoOpen = Def.setting {
     PlayRunHook.makeRunHookFromOnStarted { _ =>
-      if (BrowserNotifierKeys.shouldOpenBrowser.value) {
-        sys.props("os.name").toLowerCase match {
-          case x if x contains "mac" => s"open http://localhost:$port".!
-          case _ => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
-        }
-      }
-      ()
+      if (BrowserNotifierKeys.shouldOpenBrowser.value) openBrowser
+      else ()
     }
   }
 
