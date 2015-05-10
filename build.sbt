@@ -4,9 +4,9 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4"
 
-javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 version := "0.0.12"
 
@@ -24,4 +24,4 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 bintrayOrganization in bintray := None
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.+" % "provided")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.+" % "provided")
