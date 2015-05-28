@@ -24,4 +24,4 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 bintrayOrganization in bintray := None
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.+" % "provided")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.0" % "provided")
