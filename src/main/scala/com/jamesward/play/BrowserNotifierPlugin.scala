@@ -3,7 +3,7 @@ package com.jamesward.play
 import java.awt.Desktop
 
 import _root_.play.PlayImport.PlayKeys
-import play.{Play, PlayRunHook}
+import play.sbt.{Play, PlayRunHook}
 import sbt.Keys._
 import sbt._
 import unfiltered.netty._
