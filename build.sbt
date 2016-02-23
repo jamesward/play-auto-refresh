@@ -12,7 +12,7 @@ lazy val root = (project in file(".")).
   )
 
 libraryDependencies += "net.databinder" %% "unfiltered-netty-websockets" % "0.8.0"
-bintrayVcsUrl := Some("git@github.com/aholland/play-auto-refresh.git")
+bintrayVcsUrl := Some("git@github.com/jamesward/play-auto-refresh.git")
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3" % "provided")
 
