@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.13")
+        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.14")
         
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
 
@@ -48,31 +48,15 @@ Release Info
 * 0.0.11 - Automatically open the browser window when you run your app
 * 0.0.12 - Prevent plugin from failing when running in a headless environment
 * 0.0.13 - Fix incompatibility with Play 2.4.x
+* 0.0.14 - Bump to sbt 0.13.11
 
 Developer Info
 --------------
 
-### Setup a Test App
-
-In a Play app add a `project/project/Build.scala` file containing:
-
-```
-import sbt._
-
-object PluginDef extends Build {
-  override lazy val projects = Seq(root)
-  lazy val root = Project("plugins", file(".")).dependsOn(playAutoRefreshPlugin)
-  lazy val playAutoRefreshPlugin = file("../../play-auto-refresh")
-}
-```
-
-Run the Play app with `~run` and then test that reloading works. To recompile the `play-auto-refresh` plugin, restart the Play app.
-
 ### Release
 
-1. Set the release version in `build.sbt`
-2. Update the version in `README.md`
-3. Git Commit
-4. Git Tag
-5. Push tags
-6. Publish: `sbt publish-signed`
+1. Update the version in `README.md`
+1. Git Commit
+1. Git Tag
+1. Push tags
+1. Publish: `sbt publish-signed`
