@@ -1,7 +1,7 @@
 lazy val root = (project in file(".")).
   settings(
     name := "play-auto-refresh",
-    version in ThisBuild := "0.0.15",
+    version in ThisBuild := "0.0.14",
     scalaVersion := "2.10.6",
     organization in ThisBuild := "com.jamesward",
     sbtPlugin := true,
