@@ -2,7 +2,7 @@ package com.jamesward.play
 
 import java.awt.Desktop
 
-import _root_.play.PlayImport.PlayKeys
+import play.sbt.PlayImport.PlayKeys
 import play.sbt.{Play, PlayRunHook}
 import sbt.Keys._
 import sbt._
@@ -44,7 +44,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
     openSockets foreach (_.send(s"reload:$port"))
   }
 
-  private[this] def openBrowser: Unit = {
+  private[this] def openBrowser(): Unit = {
     sys.props("os.name").toLowerCase match {
       case x if x contains "mac" => s"open http://localhost:$port".!
       case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
@@ -54,7 +54,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
 
   val autoOpen = Def.setting {
     PlayRunHook.makeRunHookFromOnStarted { _ =>
-      if (BrowserNotifierKeys.shouldOpenBrowser.value) openBrowser
+      if (BrowserNotifierKeys.shouldOpenBrowser.value) openBrowser()
       else ()
     }
   }

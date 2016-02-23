@@ -1,27 +1,18 @@
-import bintray.Keys._
-
-name := "play-auto-refresh"
-
-organization := "com.jamesward"
-
-scalaVersion := "2.10.4"
-
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
-
-version := "0.0.13"
-
-sbtPlugin := true
+lazy val root = (project in file(".")).
+  settings(
+    name := "play-auto-refresh",
+    version in ThisBuild := "0.0.15",
+    scalaVersion := "2.10.6",
+    organization in ThisBuild := "com.jamesward",
+    sbtPlugin := true,
+    description := "auto refresh for play with scala and scala.js cross project",
+    licenses +=("MIT", url("http://opensource.org/licenses/MIT")),
+    publishMavenStyle := false,
+    javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+  )
 
 libraryDependencies += "net.databinder" %% "unfiltered-netty-websockets" % "0.8.0"
+bintrayVcsUrl := Some("git@github.com/aholland/play-auto-refresh.git")
 
-publishMavenStyle := false
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3" % "provided")
 
-bintrayPublishSettings
-
-repository in bintray := "sbt-plugins"
-
-licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
-
-bintrayOrganization in bintray := None
-
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.0" % "provided")
