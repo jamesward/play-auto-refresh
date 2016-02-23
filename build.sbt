@@ -18,6 +18,8 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 git.useGitDescribe := true
 
+bintrayVcsUrl := Some("git@github.com/jamesward/play-auto-refresh.git")
+
 enablePlugins(GitVersioning)
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3" % "provided")
