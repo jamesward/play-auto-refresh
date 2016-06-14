@@ -16,21 +16,6 @@ object BrowserNotifierKeys {
 }
 
 object BrowserNotifierPlugin extends AutoPlugin {
-  val openSockets = collection.mutable.ListBuffer.empty[WebSocket]
-
-  try {
-    Http(9001).handler(Planify({
-      case GET(Path("/")) => {
-        case Open(s) => openSockets += s
-        case Close(s) => openSockets -= s
-        case Error(s, e) => println(e.getMessage)
-      }
-    })).start()
-    println("auto-refresh websocket started on port 9001")
-  }
-  catch {
-    case _: Throwable => println("Could not start the auto-reload server. This is probably because it is already running, in which case everything should still work.")
-  }
 
   override def requires: Plugins = Play
 
@@ -38,39 +23,62 @@ object BrowserNotifierPlugin extends AutoPlugin {
 
   val browserNotification = TaskKey[Unit]("browser-notification")
 
+  val openBrowser = TaskKey[Unit]("open-browser")
+
+  val webSockets = collection.mutable.Set.empty[WebSocket]
+
   val port = sys.props.get("http.port").getOrElse("9000")
 
-  val compileTask = (compile in Compile, baseDirectory, state) mapR { (a, dir, state) =>
-    openSockets foreach (_.send(s"reload:$port"))
+  val browserNotificationTask = Def.task[Unit] {
+    webSockets.foreach(_.send(s"reload:$port"))
   }
 
-  private[this] def openBrowser(): Unit = {
-    sys.props("os.name").toLowerCase match {
-      case x if x contains "mac" => s"open http://localhost:$port".!
-      case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
-      case _ => println("Attempted to open web browser, but the current desktop environment is not supported.")
+  val openBrowserTask = Def.task[Unit] {
+    if (BrowserNotifierKeys.shouldOpenBrowser.value) {
+      sys.props("os.name").toLowerCase match {
+        case x if x contains "mac" => s"open http://localhost:$port".!
+        case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
+        case _ => streams.value.log.error("Attempted to open web browser, but the current desktop environment is not supported.")
+      }
     }
   }
 
-  val autoOpen = Def.setting {
-    PlayRunHook.makeRunHookFromOnStarted { _ =>
-      if (BrowserNotifierKeys.shouldOpenBrowser.value) openBrowser()
-      else ()
+  class BrowserNotifierPlayRunHook(state: State, streams: TaskStreams) extends PlayRunHook {
+
+    import java.net.InetSocketAddress
+
+    lazy val server = {
+      Server.local(9001).handler(
+        Planify(
+          {
+            case GET(Path("/")) => {
+              case Open(s) => webSockets += s
+              case Close(s) => webSockets -= s
+              case Error(s, e) => streams.log.error(e.getMessage)
+            }
+          }
+        )
+      )
     }
+
+    override def afterStarted(addr: InetSocketAddress): Unit = {
+      server.start()
+      Project.runTask(openBrowser, state)
+      streams.log.info("Started auto-refresh WebSocket on port 9001")
+    }
+
+    override def afterStopped(): Unit = {
+      server.stop()
+      streams.log.info("Stopped auto-refresh WebSocket on port 9001")
+    }
+
   }
 
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
-    // conf directory
-    watchSources <++= unmanagedResourceDirectories in Compile map { dirs =>
-      for {
-        dir <- dirs
-        file <- (dir.*** --- dir).get
-      } yield file
-    },
-    // assets directory, might not be necessary with SbtWeb
-    watchSources <++= baseDirectory map { path => ((path / "app/assets") ** "*").get},
-    browserNotification <<= compileTask.triggeredBy(compile in Compile),
-    BrowserNotifierKeys.shouldOpenBrowser := true,
-    PlayKeys.playRunHooks += autoOpen.value
+    browserNotification <<= browserNotificationTask.triggeredBy(compile in Compile),
+    PlayKeys.playRunHooks += new BrowserNotifierPlayRunHook(state.value, streams.value),
+    openBrowser <<= openBrowserTask,
+    BrowserNotifierKeys.shouldOpenBrowser := true
   )
+
 }
