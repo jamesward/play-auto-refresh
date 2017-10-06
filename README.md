@@ -68,4 +68,4 @@ Developer Info
 1. Git Commit
 1. Git Tag
 1. Push tags
-1. Publish: `sbt publish-signed`
+1. Publish: `sbt publish`

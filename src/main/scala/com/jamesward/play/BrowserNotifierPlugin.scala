@@ -6,14 +6,10 @@ import play.sbt.PlayImport.PlayKeys
 import play.sbt.{Play, PlayRunHook}
 import sbt.Keys._
 import sbt._
+import scala.sys.process._
 import unfiltered.netty._
 import unfiltered.netty.websockets._
 import unfiltered.request.{GET, Path}
-
-object BrowserNotifierKeys {
-  val shouldOpenBrowser = SettingKey[Boolean]("should-open-browser", "Controls if the plugin should open the web " +
-    "browser automatically when running the app")
-}
 
 object BrowserNotifierPlugin extends AutoPlugin {
 
@@ -21,29 +17,45 @@ object BrowserNotifierPlugin extends AutoPlugin {
 
   override def trigger: PluginTrigger = AllRequirements
 
-  val browserNotification = TaskKey[Unit]("browser-notification")
-
-  val openBrowser = TaskKey[Unit]("open-browser")
-
   val webSockets = collection.mutable.Set.empty[WebSocket]
 
-  val port = sys.props.get("http.port").getOrElse("9000")
-
-  val browserNotificationTask = Def.task[Unit] {
-    webSockets.foreach(_.send(s"reload:$port"))
+  object autoImport {
+    val browserNotification = taskKey[Unit]("Browser Notification")
+    val openBrowser = taskKey[Unit]("Open Play App in Browser")
+    val shouldOpenBrowser = settingKey[Boolean]("Should the web browser automatically open when running the app")
   }
 
-  val openBrowserTask = Def.task[Unit] {
-    if (BrowserNotifierKeys.shouldOpenBrowser.value) {
+  import autoImport._
+
+  def maybeOpenBrowser(shouldOpenBrowser: Boolean, playPort: Int, log: Logger): Unit = {
+    if (shouldOpenBrowser) {
       sys.props("os.name").toLowerCase match {
-        case x if x contains "mac" => s"open http://localhost:$port".!
-        case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$port"))
-        case _ => streams.value.log.error("Attempted to open web browser, but the current desktop environment is not supported.")
+        case x if x contains "mac" => s"open http://localhost:$playPort".!
+        case _ if Desktop.isDesktopSupported => Desktop.getDesktop.browse(new URI(s"http://localhost:$playPort"))
+        case _ => log.error("Attempted to open web browser, but the current desktop environment is not supported.")
       }
     }
   }
 
-  class BrowserNotifierPlayRunHook(state: State, streams: TaskStreams) extends PlayRunHook {
+  def sendWebSocketMessage(playPort: Int): Unit = {
+    webSockets.foreach(_.send(s"reload:$playPort"))
+  }
+
+  lazy val baseBrowserNotifierPluginSettings: Seq[Def.Setting[_]] = Seq(
+    browserNotification := sendWebSocketMessage(PlayKeys.playDefaultPort.value),
+    openBrowser := maybeOpenBrowser(shouldOpenBrowser.value, PlayKeys.playDefaultPort.value, streams.value.log),
+    shouldOpenBrowser := true,
+    PlayKeys.playRunHooks += new BrowserNotifierPlayRunHook(state.value, streams.value.log),
+    compile in Compile := {
+      val compileAnalysis = (compile in Compile).value
+      browserNotification.value
+      compileAnalysis
+    }
+  )
+
+  override lazy val projectSettings: Seq[Def.Setting[_]] = super.projectSettings ++ baseBrowserNotifierPluginSettings
+
+  class BrowserNotifierPlayRunHook(state: State, log: Logger) extends PlayRunHook {
 
     import java.net.InetSocketAddress
 
@@ -54,7 +66,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
             case GET(Path("/")) => {
               case Open(s) => webSockets += s
               case Close(s) => webSockets -= s
-              case Error(s, e) => streams.log.error(e.getMessage)
+              case Error(_, e) => log.error(e.getMessage)
             }
           }
         )
@@ -64,21 +76,14 @@ object BrowserNotifierPlugin extends AutoPlugin {
     override def afterStarted(addr: InetSocketAddress): Unit = {
       server.start()
       Project.runTask(openBrowser, state)
-      streams.log.info("Started auto-refresh WebSocket on port 9001")
+      log.info("Started auto-refresh WebSocket on port 9001")
     }
 
     override def afterStopped(): Unit = {
       server.stop()
-      streams.log.info("Stopped auto-refresh WebSocket on port 9001")
+      log.info("Stopped auto-refresh WebSocket on port 9001")
     }
 
   }
-
-  override def projectSettings: Seq[Def.Setting[_]] = Seq(
-    browserNotification <<= browserNotificationTask.triggeredBy(compile in Compile),
-    PlayKeys.playRunHooks += new BrowserNotifierPlayRunHook(state.value, streams.value),
-    openBrowser <<= openBrowserTask,
-    BrowserNotifierKeys.shouldOpenBrowser := true
-  )
 
 }
