@@ -28,4 +28,4 @@ bintrayRepository := "sbt-plugins"
 
 bintrayOrganization in bintray := None
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.6" % "provided")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.6" % Provided)
