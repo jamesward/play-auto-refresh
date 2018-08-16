@@ -5,3 +5,5 @@ name := "test-project"
 scalaVersion := "2.12.3"
 
 libraryDependencies += guice
+
+shouldOpenBrowser := true

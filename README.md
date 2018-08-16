@@ -22,12 +22,9 @@ Setup
 
         activator ~run
 
-5. The browser window should open automatically (if you don't want this, set `BrowserNotifierKeys.shouldOpenBrowser := false`)
+5. The browser window should open automatically. If you don't want this add the following to your `build.sbt`:
 
-        For play 2.4.x, edit `build.sbt`:
-        
-        - Add `import com.jamesward.play.BrowserNotifierKeys` at header
-        - Add `BrowserNotifierKeys.shouldOpenBrowser := false` at footer
+        shouldOpenBrowser := false
 
 6. Make a change to the code for your application and watch your changes magically appear in your browser!
 
