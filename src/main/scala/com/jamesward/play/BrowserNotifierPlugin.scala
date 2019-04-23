@@ -3,9 +3,10 @@ package com.jamesward.play
 import java.awt.Desktop
 
 import play.sbt.PlayImport.PlayKeys
-import play.sbt.{Play, PlayRunHook}
+import play.sbt.{PlayRunHook, PlayWeb}
 import sbt.Keys._
 import sbt._
+
 import scala.sys.process._
 import unfiltered.netty._
 import unfiltered.netty.websockets._
@@ -13,7 +14,7 @@ import unfiltered.request.{GET, Path}
 
 object BrowserNotifierPlugin extends AutoPlugin {
 
-  override def requires: Plugins = Play
+  override def requires: Plugins = PlayWeb
 
   override def trigger: PluginTrigger = AllRequirements
 
@@ -57,9 +58,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
 
   class BrowserNotifierPlayRunHook(state: State, log: Logger) extends PlayRunHook {
 
-    import java.net.InetSocketAddress
-
-    lazy val server = {
+    lazy val server: Server = {
       Server.local(9001).handler(
         Planify(
           {
@@ -73,7 +72,7 @@ object BrowserNotifierPlugin extends AutoPlugin {
       )
     }
 
-    override def afterStarted(addr: InetSocketAddress): Unit = {
+    override def afterStarted(): Unit = {
       server.start()
       Project.runTask(openBrowser, state)
       log.info("Started auto-refresh WebSocket on port 9001")
