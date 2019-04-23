@@ -48,6 +48,7 @@ Release Info
 * 0.0.14 - Bump to sbt 0.13.11
 * 0.0.15 - Bump to Play 2.5
 * 0.0.16 - Bump to Play 2.6 and sbt 1.0
+* 0.0.17 - Bump to Play 2.7
 
 Developer Info
 --------------
