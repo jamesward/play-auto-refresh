@@ -1,8 +1,8 @@
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+enablePlugins(PlayScala)
 
 name := "test-project"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.13.1"
 
 libraryDependencies += guice
 

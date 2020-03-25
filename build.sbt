@@ -4,7 +4,7 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.11"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
@@ -28,4 +28,4 @@ bintrayRepository := "sbt-plugins"
 
 bintrayOrganization in bintray := None
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.0" % Provided)
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.1" % Provided)

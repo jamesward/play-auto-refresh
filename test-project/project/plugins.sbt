@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.0")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.1")
 
 lazy val playAutoRefreshPlugin = RootProject(file("..").getAbsoluteFile.toURI)
 

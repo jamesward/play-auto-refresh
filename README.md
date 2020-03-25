@@ -8,7 +8,7 @@ Setup
 
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
-        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.16")
+        addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.18")
         
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
 
@@ -17,10 +17,6 @@ Setup
 4. Start your Play app in file watch mode:
 
         sbt ~run
-        
-   or
-
-        activator ~run
 
 5. The browser window should open automatically. If you don't want this add the following to your `build.sbt`:
 
@@ -49,6 +45,7 @@ Release Info
 * 0.0.15 - Bump to Play 2.5
 * 0.0.16 - Bump to Play 2.6 and sbt 1.0
 * 0.0.17 - Bump to Play 2.7
+* 0.0.18 - Bump to Play 2.8
 
 Developer Info
 --------------
@@ -56,7 +53,7 @@ Developer Info
 ### Test Project
 
 1. `cd test-project`
-1. `activator ~run`
+1. `sbt ~run`
 1. [Install the Play Framework Tools Chrome Extension](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen)
 1. Check out the app: [http://localhost:9000](http://localhost:9000)
 1. Change a asset and watch your browser magically reload the changes!
