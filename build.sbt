@@ -8,7 +8,7 @@ scalaVersion := "2.12.18"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+javacOptions ++= Seq("--release", "11")
 
 description := "Auto refresh for Play Framework apps"
 
