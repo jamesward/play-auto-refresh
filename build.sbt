@@ -22,10 +22,4 @@ enablePlugins(GitVersioning)
 
 git.useGitDescribe := true
 
-bintrayVcsUrl := Some("git@github.com/jamesward/play-auto-refresh.git")
-
-bintrayRepository := "sbt-plugins"
-
-bintrayOrganization in bintray := None
-
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0" % Provided)
