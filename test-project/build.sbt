@@ -2,7 +2,9 @@ enablePlugins(PlayScala)
 
 name := "test-project"
 
-scalaVersion := "2.13.12"
+crossScalaVersions := Seq("2.13.12", "3.3.1")
+
+scalaVersion := crossScalaVersions.value.head
 
 libraryDependencies += guice
 
