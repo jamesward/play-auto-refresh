@@ -47,8 +47,8 @@ object BrowserNotifierPlugin extends AutoPlugin {
     openBrowser := maybeOpenBrowser(shouldOpenBrowser.value, PlayKeys.playDefaultPort.value, streams.value.log),
     shouldOpenBrowser := true,
     PlayKeys.playRunHooks += new BrowserNotifierPlayRunHook(state.value, streams.value.log),
-    compile in Compile := {
-      val compileAnalysis = (compile in Compile).value
+    Compile / compile := {
+      val compileAnalysis = (Compile / compile).value
       browserNotification.value
       compileAnalysis
     }
