@@ -9,7 +9,7 @@ Setup
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
 ```sbt
-addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.18")
+addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.19")
 ```
 
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
@@ -71,8 +71,9 @@ The source code of the extension can be found here: https://github.com/jamesward
 
 ### Release
 
-1. Update the version in `README.md`
-1. Git Commit
-1. Git Tag
-1. Push tags
-1. Publish: `sbt publish`
+1. Update the version and "Release Info" in `README.md`
+1. Git Tag: `git tag -s v0.0.xx`
+1. Push tag
+1. Watch workflow doing the magic: https://github.com/jamesward/play-auto-refresh/actions/workflows/publish.yml
+1. Wait (sometimes 15 minutes, sometimes 2 hours): https://repo1.maven.org/maven2/com/jamesward/play-auto-refresh_2.12_1.0
+1. Enjoy!
