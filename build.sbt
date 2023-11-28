@@ -18,7 +18,7 @@ libraryDependencies += "ws.unfiltered" %% "unfiltered-netty-websockets" % "0.12.
 
 licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0" % Provided)
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.0" % Provided)
 
 // Customise sbt-dynver's behaviour to make it work with tags which are/aren't v-prefixed
 ThisBuild / dynverVTagPrefix := true

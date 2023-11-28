@@ -9,7 +9,7 @@ Setup
 1. Add the SBT plugin to your `project/plugins.sbt` file (make sure to add an empty line before this one):
 
 ```sbt
-addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.19")
+addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.20")
 ```
 
 2. The plugin bootstraps itself automatically as soon as you enable Play in your project.
@@ -53,6 +53,7 @@ Release Info
 * 0.0.17 - Bump to Play 2.7
 * 0.0.18 - Bump to Play 2.8
 * 0.0.19 - Bump to Play 2.9
+* 0.0.20 - Bump to Play 3.0
 
 Developer Info
 --------------
