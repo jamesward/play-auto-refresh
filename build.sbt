@@ -14,7 +14,7 @@ description := "Auto refresh for Play Framework apps"
 
 homepage := Some(url("https://github.com/jamesward/play-auto-refresh"))
 
-libraryDependencies += "ws.unfiltered" %% "unfiltered-netty-websockets" % "0.12.0"
+libraryDependencies += "ws.unfiltered" %% "unfiltered-netty-websockets" % "0.12.1"
 
 licenses += "MIT" -> url("http://opensource.org/licenses/MIT")
 
