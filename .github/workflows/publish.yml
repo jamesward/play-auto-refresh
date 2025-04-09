@@ -27,6 +27,9 @@ jobs:
         with:
           jvm: adoptium:11
 
+      - name: Install sbt
+        uses: sbt/setup-sbt@v1
+
       - name: Publish artifacts
         run: sbt ci-release
         env:
