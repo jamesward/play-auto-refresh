@@ -9,7 +9,7 @@ on:
 jobs:
   publish-artifacts:
     name: JDK 11
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: ${{ github.repository_owner == 'jamesward' }}
     steps:
       - name: Checkout
