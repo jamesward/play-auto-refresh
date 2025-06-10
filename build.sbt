@@ -1,5 +1,3 @@
-import xerial.sbt.Sonatype.sonatypeCentralHost
-
 sbtPlugin := true
 
 name := "play-auto-refresh"
@@ -39,5 +37,3 @@ developers ++= List(Developer(
     url("https://github.com/jamesward")
   ),
 )
-
-ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
