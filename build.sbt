@@ -4,7 +4,7 @@ name := "play-auto-refresh"
 
 organization := "com.jamesward"
 
-scalaVersion := "2.12.20"
+scalaVersion := "2.12.21"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
