@@ -2,7 +2,7 @@ enablePlugins(PlayScala)
 
 name := "test-project"
 
-crossScalaVersions := Seq("2.13.16", "3.3.5")
+crossScalaVersions := Seq("2.13.18", "3.3.7")
 
 scalaVersion := crossScalaVersions.value.head
 
